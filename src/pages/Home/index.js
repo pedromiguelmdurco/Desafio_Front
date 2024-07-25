@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 
 function Home() {
@@ -52,16 +51,15 @@ function Home() {
     }
 
     function maior(e) {
-        console.log(e)
-        console.log(e.powerstats)
-        /*const aux = Object.values(e.powerstats)
+        const aux = Object.values(e[0].powerstats)
         const aux2 = aux.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0)
         if (poder.power < aux2) {
-            setPoder(e.id, aux2);
-        }*/
+            setPoder({ id: e[0].id, power: aux2 });
+        }
 
     }
 
+    const vencedor = filtro.find(item => item.id === poder.id);
     return (
         <div className='min-h-screen flex flex-col items-center justify-center py-20 px-4'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-8 w-full '> {/* Contêiner de grade para as colunas */}
@@ -94,8 +92,10 @@ function Home() {
                         </button>
                         <Modal isOpen={isModalOpen} onClose={closeModal}>
 
-                            <h2 className="text-xl font-semibold">O Ganhador é ....{poder.id}</h2>
-                            <p className="mt-4">aqui iria a imagem do Ganhador</p>
+                            <h2 className="text-xl font-semibold">O Ganhador é ....{vencedor.name}</h2>
+                            <img src={vencedor.images.lg} className="max-w-full h-auto mt-2" />
+
+
                             <button
                                 onClick={closeModal}
                                 className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
